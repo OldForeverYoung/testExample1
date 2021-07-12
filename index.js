@@ -138,19 +138,7 @@ window.GAME = (() => {
 
   /** @abstract */
   class AbstractGameObject {
-    constructor({
-      height,
-      width,
-      direction,
-      speed,
-      x,
-      y,
-      // t6
-      frag = 0,
-      // t6
-      randomFire,
-      angle = 0
-    }) {
+    constructor({ height, width, direction, speed, x, y, angle = 0 }) {
       this.direction = direction;
       this.height = height;
       this.speed = speed;
@@ -158,7 +146,7 @@ window.GAME = (() => {
       this.x = x;
       this.y = y;
       this.angle = angle;
-      this.frag = frag;
+
       //t3
       this.randomFire = Math.random();
       //t3
@@ -192,11 +180,9 @@ window.GAME = (() => {
   /** @abstract */
   class FireballsThrowerObject extends AbstractGameObject {
     _throwFireball(gameState) {
-      const fireballWidth = GameConst.Fireball.size * 2;
-      const fireballHeight = GameConst.Fireball.size;
-      // ну хрен его знает:
+      const fireballWidth = GameConst.Fireball.size * 2; //??
+      const fireballHeight = GameConst.Fireball.size; //??
 
-      // я бы не додумался снова обьявить что то - что и так в абстракте
       const fireballX = this._checkDirection(MovementDirection.RIGHT)
         ? //? this.x + this.width - fireballWidth / 2
           this.x + this.width + 1
@@ -317,7 +303,6 @@ window.GAME = (() => {
             y: GameConst.Enemy.getY(GameFrame.HEIGHT)
           })
         );
-        //  game.setGameStatus(GameStatus.WIN);
       }
 
       if (this.x < 0) {
@@ -341,10 +326,6 @@ window.GAME = (() => {
         );
         console.log(this.randomFire);
         this._throwFireball(gameState);
-
-        //if (this.x > 1) {
-        //  GameStatus.WIN
-        //}
       }
       //t3
 
@@ -385,38 +366,8 @@ window.GAME = (() => {
         this.y += -this.randomFire;
         this.randomFire -= Math.random() / 10;
         // это неправильное условие =((
-        // нужно подумать над траэкторией изменяемой в геометрической прогрессии
         // task 2.2
       }
-
-      /*
-      if (
-        this.x > EnemyObject.x &&
-        this.x < EnemyObject.x + EnemyObject.width - 29 &&
-        this.y > EnemyObject.y &&
-        this.y < EnemyObject.y + EnemyObject.height
-      ) {
-        this.state = ObjectState.DISPOSED;
-        // game.setGameStatus(GameStatus.WIN);
-        // gameState.objects[0].frag = 1;
-        // gameState.objects[1].state = ObjectState.DISPOSED;
-
-        gameState.objects[1].state = ObjectState.DISPOSED;
-      }
-      if (
-        this.x > gameState.objects[0].x &&
-        this.x < gameState.objects[0].x + gameState.objects[0].width - 29 &&
-        this.y > gameState.objects[0].y &&
-        this.y < gameState.objects[0].y + gameState.objects[0].height
-      ) {
-        // console.log(gameState.objects[0]);
-        this.state = ObjectState.DISPOSED;
-        gameState.objects[1].frag = 1;
-        gameState.objects[0].state = ObjectState.DISPOSED;
-
-        // game.setGameStatus(GameStatus.FAIL);
-      }
-      */
     }
   }
 
@@ -483,16 +434,7 @@ window.GAME = (() => {
           }
         }
       }
-
-      // забрали координаты
-      // что бы не запутаться в том что есть я лучше сделаю отдельное условие
-
-      if (player.x <= 100) {
-        console.log(fireballs);
-        return GameStatus.CONTINUE;
-      } else {
-        return GameStatus.CONTINUE;
-      }
+      return GameStatus.CONTINUE;
     },
 
     /**
