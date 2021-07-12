@@ -254,7 +254,10 @@ window.GAME = (() => {
         this.x -= this.speed * timeframe * 1; //correct speed?
       }
       // GameFrame.WIDTH = 500? yes?
-      if (gameState.keysPressed.RIGHT && this.x < GameFrame.WIDTH - 150) {
+      if (
+        gameState.keysPressed.RIGHT &&
+        this.x < GameFrame.WIDTH - GameConst.Player.width
+      ) {
         // '1.38' - i try used = 500, but - "units" go out
         this._setDirection(MovementDirection.RIGHT);
         this.x += this.speed * timeframe * 1; //correct speed?
