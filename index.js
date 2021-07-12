@@ -443,12 +443,6 @@ window.GAME = (() => {
       const fireballs = gameState.objects.filter(
         object => object.type === GameObjectType.FIREBALL
       );
-      let fireballsX = [],
-        fireballsY = [],
-        enemiesX = [],
-        enemiesY = [],
-        playerX = [],
-        playerY = [];
       let recycle0, recycle1;
       if (player.length === 0 && playersDispose.length === 0) {
         return GameStatus.FAIL;
@@ -459,26 +453,14 @@ window.GAME = (() => {
       // ох сЧа как сделаю 5.1 и 5.2 таски: смотри сюда :D
       if (fireballs.length > 0) {
         for (recycle0 = 0; recycle0 < fireballs.length; recycle0++) {
-          fireballsX[recycle0] = fireballs[recycle0].x;
-          fireballsY[recycle0] = fireballs[recycle0].y;
-        }
-        for (recycle0 = 0; recycle0 < enemies.length; recycle0++) {
-          enemiesX[recycle0] = enemies[recycle0].x;
-          enemiesY[recycle0] = enemies[recycle0].y;
-        }
-        for (recycle0 = 0; recycle0 < player.length; recycle0++) {
-          playerX[recycle0] = player[recycle0].x;
-          playerY[recycle0] = player[recycle0].y;
-        }
-        for (recycle0 = 0; recycle0 < fireballs.length; recycle0++) {
           for (recycle1 = 0; recycle1 < enemies.length; recycle1++) {
             if (
-              fireballsX[recycle0] >= enemiesX[recycle1] &&
-              fireballsY[recycle0] >= enemiesY[recycle1] &&
-              fireballsX[recycle0] <=
-                enemiesX[recycle1] + enemies[recycle1].width &&
-              fireballsY[recycle0] <=
-                enemiesY[recycle1] + enemies[recycle1].height
+              fireballs[recycle0].x >= enemies[recycle1].x &&
+              fireballs[recycle0].y >= enemies[recycle1].y &&
+              fireballs[recycle0].x <=
+                enemies[recycle1].x + enemies[recycle1].width &&
+              fireballs[recycle0].y <=
+                enemies[recycle1].y + enemies[recycle1].height
             ) {
               console.log('work?');
               enemies[recycle1].state = ObjectState.DISPOSED;
@@ -487,12 +469,12 @@ window.GAME = (() => {
           }
           for (recycle1 = 0; recycle1 < player.length; recycle1++) {
             if (
-              fireballs[recycle0].x >= playerX[recycle1] &&
-              fireballsY[recycle0] >= playerY[recycle1] &&
-              fireballsX[recycle0] <=
-                playerX[recycle1] + player[recycle1].width &&
-              fireballsY[recycle0] <=
-                playerY[recycle1] + player[recycle1].height
+              fireballs[recycle0].x >= player[recycle1].x &&
+              fireballs[recycle0].y >= player[recycle1].y &&
+              fireballs[recycle0].x <=
+                player[recycle1].x + player[recycle1].width &&
+              fireballs[recycle0].y <=
+                player[recycle1].y + player[recycle1].height
             ) {
               console.log('work?');
               player[recycle1].state = ObjectState.DISPOSED;
